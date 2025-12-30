@@ -1,5 +1,7 @@
-import 'package:dartz/dartz.dart';
+// ignore: implementation_imports
+import 'package:either_dart/src/either.dart';
 import 'package:equatable/equatable.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lost_n_found/core/error/failures.dart';
 import 'package:lost_n_found/core/usecases/app_usecases.dart';
@@ -31,8 +33,11 @@ class CreateCategoryUsecase
 
   @override
   Future<Either<Failure, bool>> call(CreateCategoryParams params) async {
-    final categoryEntity = CategoryEntity(categoryName: params.name);
+    final categoryEntity = CategoryEntity(
+      categoryName: params.name,
+      description: params.description,
+    );
 
-    return _categoryRepository.createCategory(categoryEntity);
+    return await _categoryRepository.createCategory(categoryEntity);
   }
 }
