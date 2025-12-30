@@ -59,4 +59,9 @@ class HiveService {
   Future<void> deleteBatch(String batchId) async {
     await _batchBox.delete(batchId);
   }
+
+  // Get all batches
+  List<BatchHiveModel>? getAllBatches() {
+    return _batchBox.values.toList();
+  }
 }
