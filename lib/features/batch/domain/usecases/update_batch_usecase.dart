@@ -1,0 +1,34 @@
+import 'package:either_dart/src/either.dart';
+import 'package:equatable/equatable.dart';
+import 'package:lost_n_found/core/error/failures.dart';
+import 'package:lost_n_found/core/usecases/app_usecases.dart';
+import 'package:lost_n_found/features/batch/domain/entities/batch_entity.dart';
+import 'package:lost_n_found/features/batch/domain/repositories/batch_repository.dart';
+
+class UpdateBatchParams extends Equatable {
+  final String batchId;
+  final String batchName;
+  final String? status;
+
+  const UpdateBatchParams({
+    required this.batchId,
+    required this.batchName,
+    this.status,
+  });
+
+  @override
+  List<Object?> get props => [batchId, batchName, status];
+}
+
+class UpdateBatchUsecase implements UsecaseWithParms<bool, UpdateBatchParams> {
+  final IBatchRepository _batchRepository;
+
+  UpdateBatchUsecase({required IBatchRepository batchRepo})
+    : _batchRepository = batchRepo;
+
+  @override
+  Future<Either<Failure, bool>> call(UpdateBatchParams params) {
+    BatchEntity updateduser = BatchEntity(batchName: params.batchName);
+    return _batchRepository.updateBatch(updateduser);
+  }
+}
