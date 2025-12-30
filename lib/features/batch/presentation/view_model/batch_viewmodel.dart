@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lost_n_found/core/error/failures.dart';
-import 'package:lost_n_found/features/batch/domain/usecases/create_batch_usecase.dart';
-import 'package:lost_n_found/features/batch/domain/usecases/delete_batch_usecase.dart';
-import 'package:lost_n_found/features/batch/domain/usecases/get_all_batch_usecase.dart';
-import 'package:lost_n_found/features/batch/domain/usecases/update_batch_usecase.dart';
+import 'package:lost_n_found/features/category/domain/domain/usecases/create_batch_usecase.dart';
+import 'package:lost_n_found/features/category/domain/domain/usecases/delete_batch_usecase.dart';
+import 'package:lost_n_found/features/category/domain/domain/usecases/get_all_batch_usecase.dart';
+import 'package:lost_n_found/features/category/domain/domain/usecases/update_batch_usecase.dart';
 import 'package:lost_n_found/features/batch/presentation/state/batch_status_state.dart';
 
 class BatchViewmodel extends Notifier<BatchStatusState> {

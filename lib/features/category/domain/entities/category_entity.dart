@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class CategoryEntity extends Equatable {
   final String? categoryId;
-  final String? categoryName;
+  final String categoryName;
   final String? description;
   final String? status;
 
