@@ -40,7 +40,7 @@ class CategoryHiveModel extends HiveObject {
   factory CategoryHiveModel.fromEntity(CategoryEntity entity) {
     return CategoryHiveModel(
       categoryId: entity.categoryId,
-      categoryName: entity.categoryName ?? "",
+      categoryName: entity.categoryName,
       description: entity.description,
       status: entity.status,
     );
