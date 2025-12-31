@@ -18,11 +18,6 @@ class CategoryViewModel extends Notifier<CategoryState> {
 
   @override
   CategoryState build() {
-    _getAllCategoriesUsecase = ref.read(getAllCategoriesUsecaseProvider);
-    _getCategoryByIdUsecase = ref.read(getCategoryByIdUsecaseProvider);
-    _createCategoryUsecase = ref.read(createCategoryUsecaseProvider);
-    _updateCategoryUsecase = ref.read(updateCategoryUsecaseProvider);
-    _deleteCategoryUsecase = ref.read(deleteCategoryUsecaseProvider);
     return const CategoryState();
   }
 

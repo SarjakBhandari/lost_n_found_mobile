@@ -1,9 +1,7 @@
 import 'package:either_dart/either.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lost_n_found/core/error/failures.dart';
 import 'package:lost_n_found/core/usecases/app_usecases.dart';
-import 'package:lost_n_found/features/category/data/repositories/category_repositories.dart';
 import 'package:lost_n_found/features/category/domain/entities/category_entity.dart';
 import 'package:lost_n_found/features/category/domain/repository/category_repository.dart';
 
@@ -23,11 +21,6 @@ class UpdateCategoryParams extends Equatable {
   @override
   List<Object?> get props => [categoryId, name, description, status];
 }
-
-final updateCategoryUsecaseProvider = Provider<UpdateCategoryUsecase>((ref) {
-  final categoryRepository = ref.read(categoryRepositoryProvider);
-  return UpdateCategoryUsecase(categoryRepository: categoryRepository);
-});
 
 class UpdateCategoryUsecase
     implements UsecaseWithParms<bool, UpdateCategoryParams> {

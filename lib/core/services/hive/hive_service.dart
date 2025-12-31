@@ -30,27 +30,33 @@ class HiveService {
 
     final dummyCategories = [
       CategoryHiveModel(
-        name: 'Electronics',
+        categoryName: 'Electronics',
         description: 'Phones, laptops, tablets, etc.',
       ),
-      CategoryHiveModel(name: 'Personal', description: 'Personal belongings'),
       CategoryHiveModel(
-        name: 'Accessories',
+        categoryName: 'Personal',
+        description: 'Personal belongings',
+      ),
+      CategoryHiveModel(
+        categoryName: 'Accessories',
         description: 'Watches, jewelry, etc.',
       ),
       CategoryHiveModel(
-        name: 'Documents',
+        categoryName: 'Documents',
         description: 'IDs, certificates, papers',
       ),
       CategoryHiveModel(
-        name: 'Keys',
+        categoryName: 'Keys',
         description: 'House keys, car keys, etc.',
       ),
       CategoryHiveModel(
-        name: 'Bags',
+        categoryName: 'Bags',
         description: 'Backpacks, handbags, wallets',
       ),
-      CategoryHiveModel(name: 'Other', description: 'Miscellaneous items'),
+      CategoryHiveModel(
+        categoryName: 'Other',
+        description: 'Miscellaneous items',
+      ),
     ];
 
     for (var category in dummyCategories) {
