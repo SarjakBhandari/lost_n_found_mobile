@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lost_n_found/features/auth/presentation/state/auth_state.dart';
+import 'package:lost_n_found/features/auth/presentation/view_model/auth_viewmodel.dart';
+
+import 'package:lost_n_found/features/batch/presentation/view_model/batch_viewmodel.dart';
 import '../../../../app/routes/app_routes.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/theme_extensions.dart';
@@ -24,7 +28,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
-  bool _isLoading = false;
   bool _agreedToTerms = false;
   String? _selectedBatch;
   String _selectedCountryCode = '+977'; // Default Nepal
@@ -39,12 +42,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   ];
 
   // Mock batch data - will come from GET /api/v1/batches
-  final List<Map<String, String>> _batches = [
-    {'id': '1', 'name': '35A'},
-    {'id': '2', 'name': '35B'},
-    {'id': '3', 'name': '36A'},
-    {'id': '4', 'name': '36B'},
-  ];
+  // List<BatchEntity> _batches = [];
 
   @override
   void dispose() {
@@ -67,15 +65,22 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
     if (_formKey.currentState!.validate()) {
       setState(() {
-        _isLoading = true;
+        //resiter subit and validated
+        ref
+            .read(authViewModelProvider.notifier)
+            .register(
+              fullName: _nameController.text,
+              email: _emailController.text,
+              username: _nameController.text.trim().split("@").first,
+              password: _passwordController.text,
+              phoneNumber: _passwordController.text,
+              batchId: _selectedBatch,
+            );
       });
 
       await Future.delayed(const Duration(seconds: 2));
 
       if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
         AppRoutes.pushReplacement(context, const DashboardPage());
       }
     }
@@ -86,7 +91,35 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      ref.read(batchViewModelProvider.notifier).getAllBatches();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final batchState = ref.read(batchViewModelProvider);
+    final authState = ref.read(authViewModelProvider);
+    // if (batchState.status == BatchStatus.loaded) {
+    //   _batches = batchState.batches;
+    // }
+
+    ref.listen<AuthState>(authViewModelProvider, (previous, next) {
+      if (next.status == AuthStatus.error) {
+        SnackbarUtils.showError(
+          context,
+          next.errorMessage ?? "Registration failed",
+        );
+      } else if (next.status == AuthStatus.registered) {
+        // Navigate Dashboard
+        SnackbarUtils.showSuccess(
+          context,
+          next.errorMessage ?? 'Registration Success',
+        );
+      }
+    });
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -97,11 +130,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
               borderRadius: BorderRadius.circular(12),
               boxShadow: context.softShadow,
             ),
-            child: Icon(
-              Icons.arrow_back,
-              color: context.textPrimary,
-              size: 20,
-            ),
+            child: Icon(Icons.arrow_back, color: context.textPrimary, size: 20),
           ),
           onPressed: _navigateToLogin,
         ),
@@ -286,10 +315,10 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       hintText: 'Choose your batch',
                       prefixIcon: Icon(Icons.school_rounded),
                     ),
-                    items: _batches.map((batch) {
+                    items: batchState.batches.map((batch) {
                       return DropdownMenuItem<String>(
-                        value: batch['id'],
-                        child: Text(batch['name']!),
+                        value: batch.batchId,
+                        child: Text(batch.batchName ?? ""),
                       );
                     }).toList(),
                     onChanged: (value) {
@@ -434,7 +463,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                   GradientButton(
                     text: 'Create Account',
                     onPressed: _handleSignup,
-                    isLoading: _isLoading,
+                    isLoading: authState.status == AuthStatus.loading,
                   ),
                   const SizedBox(height: 32),
 

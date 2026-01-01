@@ -13,4 +13,6 @@ class HiveTableConstants {
   static const String categoryTable = 'item_table';
   static const int commentsTypeId = 4;
   static const String commentsTable = 'item_table';
+  static const int authTypeId = 5;
+  static const String authTable = 'auth_table';
 }

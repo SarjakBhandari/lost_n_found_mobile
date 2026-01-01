@@ -5,6 +5,11 @@ import 'package:lost_n_found/features/batch/domain/usecases/get_all_batch_usecas
 import 'package:lost_n_found/features/batch/domain/usecases/update_batch_usecase.dart';
 import 'package:lost_n_found/features/batch/presentation/state/batch_status_state.dart';
 
+final batchViewModelProvider =
+    NotifierProvider<BatchViewmodel, BatchStatusState>(() {
+      return BatchViewmodel();
+    });
+
 class BatchViewmodel extends Notifier<BatchStatusState> {
   late final GetAllBatchUsecase _getAllBatchUsecase;
   late final CreateBatchUsecase _createBatchUsecase;
@@ -13,6 +18,10 @@ class BatchViewmodel extends Notifier<BatchStatusState> {
 
   @override
   BatchStatusState build() {
+    _getAllBatchUsecase = ref.read(getAllBatchUsecaseProvider);
+    _createBatchUsecase = ref.read(createBatchUsecaseProvider);
+    _updateBatchUsecase = ref.read(updateBatchUsecaseProvider);
+    _deleteBatchUsecase = ref.read(deleteBatchUsecaseProvider);
     return const BatchStatusState();
   }
 
