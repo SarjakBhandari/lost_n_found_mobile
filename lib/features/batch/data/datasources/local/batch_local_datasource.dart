@@ -7,7 +7,7 @@ final batchLocalDataSourceProvider = Provider<BatchLocalDatasource>((ref) {
   return BatchLocalDatasource(hiveService: ref.read(hiveServiceProvider));
 });
 
-class BatchLocalDatasource implements IBatchDataSource {
+class BatchLocalDatasource implements IBatchLocalDataSource {
   // Dependency Injection
   final HiveService _hiveService;
 

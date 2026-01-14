@@ -24,7 +24,7 @@ class UpdateBatchParams extends Equatable {
 }
 
 final updateBatchUsecaseProvider = Provider<UpdateBatchUsecase>((ref) {
-  return UpdateBatchUsecase(batchRepo: ref.read(batchRepositiryProvider));
+  return UpdateBatchUsecase(batchRepo: ref.read(batchRepositoryProvider));
 });
 
 class UpdateBatchUsecase implements UsecaseWithParms<bool, UpdateBatchParams> {
